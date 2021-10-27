@@ -27,6 +27,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/tasks', function () {
+    return \App\Models\Task::latest()->pluck('body');
+});
+
+Route::post('/tasks', function () {
+    $task = \App\Models\Task::forceCreate(request(['body']));
+
+    event(
+        (new \App\Events\TaskCreated($task))->dontBroadcastToCurrentUser()
+    );
+});
 
 Route::get('/update/{id}', function ($id) {
     \App\Events\OrderStatusUpdate::dispatch(new Order($id));
