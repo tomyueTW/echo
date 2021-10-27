@@ -16,10 +16,11 @@ window.Vue = require('vue').default;
  * Eg. ./components/TaskList.vue -> <example-component></example-component>
  */
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+const files = require.context('./', true, /\.vue$/i)
+files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('task-list', require('./components/TaskList.vue').default);
+// Vue.component('task-list', require('./components/TaskList.vue').default);
+// Vue.component('room', require('./components/Room.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
