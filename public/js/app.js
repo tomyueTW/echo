@@ -2076,6 +2076,150 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     id: {
@@ -2100,7 +2244,7 @@ __webpack_require__.r(__webpack_exports__);
       console.log(response);
       _this.messages = response.data;
     });
-    window.Echo.channel('room.' + this.id).listen('MessageCreated', function (e) {
+    window.Echo["private"]('room.' + this.id).listen('MessageCreated', function (e) {
       console.log(666, e);
 
       _this.messages.push(e.message.body);
@@ -2205,15 +2349,14 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js"
  * Vue components. It will recursively scan this directory for the Vue
  * components and automatically register them with their "basename".
  *
- * Eg. ./components/TaskList.vue -> <example-component></example-component>
+ * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
 var files = __webpack_require__("./resources/js sync recursive \\.vue$/");
 
 files.keys().map(function (key) {
   return Vue.component(key.split('/').pop().split('.')[0], files(key)["default"]);
-}); // Vue.component('task-list', require('./components/TaskList.vue').default);
-// Vue.component('room', require('./components/Room.vue').default);
+}); // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -2270,7 +2413,23 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
   key: "3a9b8a17aa184a1ce7b0",
   cluster: "ap3",
-  forceTLS: true
+  forceTLS: true // authorizer: (channel, options) => {
+  //     return {
+  //         authorize: (socketId, callback) => {
+  //             axios.post('/api/broadcasting/auth', {
+  //                 socket_id: socketId,
+  //                 channel_name: channel.name
+  //             })
+  //                 .then(response => {
+  //                     callback(false, response.data);
+  //                 })
+  //                 .catch(error => {
+  //                     callback(true, error);
+  //                 });
+  //         }
+  //     };
+  // },
+
 });
 
 /***/ }),
@@ -43972,42 +44131,168 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h1", [_vm._v(_vm._s(this.name))]),
-    _vm._v(" "),
-    _c(
-      "ul",
-      _vm._l(_vm.messages, function (message) {
-        return _c("li", { domProps: { textContent: _vm._s(message) } })
-      }),
-      0
-    ),
-    _vm._v(" "),
-    _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.newMessage,
-          expression: "newMessage",
-        },
-      ],
-      staticClass: "input-group-text",
-      attrs: { type: "text" },
-      domProps: { value: _vm.newMessage },
-      on: {
-        blur: _vm.addMessage,
-        input: function ($event) {
-          if ($event.target.composing) {
-            return
-          }
-          _vm.newMessage = $event.target.value
-        },
-      },
-    }),
+  return _c("div", { staticClass: "container-fluid h-100" }, [
+    _c("div", { staticClass: "row justify-content-center h-100" }, [
+      _c("div", { staticClass: "col-md-8 col-xl-6 chat" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header msg_head" }, [
+            _c("div", { staticClass: "d-flex bd-highlight" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "user_info" }, [
+                _c("span", [_vm._v(_vm._s(this.name))]),
+                _vm._v(" "),
+                _c("p", [_vm._v("1767 Messages")]),
+              ]),
+              _vm._v(" "),
+              _vm._m(1),
+            ]),
+            _vm._v(" "),
+            _vm._m(2),
+            _vm._v(" "),
+            _vm._m(3),
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "card-body msg_card_body" },
+            [
+              _vm._l(_vm.messages, function (message) {
+                return [
+                  _c(
+                    "div",
+                    { staticClass: "d-flex justify-content-start mb-4" },
+                    [
+                      _c("div", { staticClass: "img_cont_msg" }),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "msg_cotainer" }, [
+                        _vm._v(
+                          "\n                                    " +
+                            _vm._s(message) +
+                            "\n"
+                        ),
+                      ]),
+                    ]
+                  ),
+                ]
+              }),
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-footer" }, [
+            _c("div", { staticClass: "input-group" }, [
+              _vm._m(4),
+              _vm._v(" "),
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.newMessage,
+                    expression: "newMessage",
+                  },
+                ],
+                staticClass: "form-control type_msg",
+                attrs: { name: "", placeholder: "Type your message..." },
+                domProps: { value: _vm.newMessage },
+                on: {
+                  input: function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.newMessage = $event.target.value
+                  },
+                },
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group-append" }, [
+                _c(
+                  "span",
+                  {
+                    staticClass: "input-group-text send_btn",
+                    on: { click: _vm.addMessage },
+                  },
+                  [_c("i", { staticClass: "fas fa-location-arrow" })]
+                ),
+              ]),
+            ]),
+          ]),
+        ]),
+      ]),
+    ]),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "img_cont" }, [
+      _c("img", {
+        staticClass: "rounded-circle user_img",
+        attrs: {
+          src: "https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg",
+        },
+      }),
+      _vm._v(" "),
+      _c("span", { staticClass: "online_icon" }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "video_cam" }, [
+      _c("span", [_c("i", { staticClass: "fas fa-video" })]),
+      _vm._v(" "),
+      _c("span", [_c("i", { staticClass: "fas fa-phone" })]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { attrs: { id: "action_menu_btn" } }, [
+      _c("i", { staticClass: "fas fa-ellipsis-v" }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "action_menu" }, [
+      _c("ul", [
+        _c("li", [
+          _c("i", { staticClass: "fas fa-user-circle" }),
+          _vm._v(" View profile"),
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("i", { staticClass: "fas fa-users" }),
+          _vm._v(" Add to close friends"),
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("i", { staticClass: "fas fa-plus" }),
+          _vm._v(" Add to group"),
+        ]),
+        _vm._v(" "),
+        _c("li", [_c("i", { staticClass: "fas fa-ban" }), _vm._v(" Block")]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-append" }, [
+      _c("span", { staticClass: "input-group-text attach_btn" }, [
+        _c("i", { staticClass: "fas fa-paperclip" }),
+      ]),
+    ])
+  },
+]
 render._withStripped = true
 
 
