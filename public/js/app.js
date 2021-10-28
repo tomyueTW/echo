@@ -2188,38 +2188,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     id: {
@@ -2232,20 +2200,35 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       messages: [],
-      newMessage: ''
+      newMessage: '',
+      participants: []
     };
   },
   created: function created() {
     var _this = this;
 
-    console.log(this.id);
-    console.log(this.name);
+    console.log('room id:' + this.id);
+    console.log('room name:' + this.name);
     axios.get('/api/rooms/' + this.id).then(function (response) {
-      console.log(response);
       _this.messages = response.data;
     });
-    window.Echo["private"]('room.' + this.id).listen('MessageCreated', function (e) {
-      console.log(666, e);
+    var channel = window.Echo.join('room.' + this.id);
+    channel.here(function (users) {
+      console.log('here');
+      console.log(users);
+      _this.participants = users;
+    }).joining(function (user) {
+      console.log('joining');
+      console.log(user);
+
+      _this.participants.push(user);
+    }).leaving(function (user) {
+      console.log('leaving');
+      console.log(user);
+
+      _this.participants.splice(_this.participants.indexOf(user), 1);
+    }).listen('MessageCreated', function (e) {
+      console.log('MessageCreated', e);
 
       _this.messages.push(e.message.body);
     });
@@ -2261,8 +2244,6 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/api/rooms/' + this.id + '/messages', {
         body: this.newMessage
       }).then(function (response) {
-        console.log(response);
-
         _this2.messages.push(_this2.newMessage);
 
         _this2.newMessage = '';
@@ -44133,11 +44114,42 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container-fluid h-100" }, [
     _c("div", { staticClass: "row justify-content-center h-100" }, [
+      _c("div", { staticClass: "col-md-4 col-xl-3 chat" }, [
+        _c("div", { staticClass: "card mb-sm-3 mb-md-0 contacts_card" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body contacts_body" }, [
+            _c(
+              "div",
+              { staticClass: "contacts" },
+              [
+                _vm._l(_vm.participants, function (participant) {
+                  return [
+                    _c("li", [
+                      _c("div", { staticClass: "d-flex bd-highlight" }, [
+                        _vm._m(1, true),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "user_info" }, [
+                          _c("span", [_vm._v(_vm._s(participant.user.name))]),
+                        ]),
+                      ]),
+                    ]),
+                  ]
+                }),
+              ],
+              2
+            ),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-footer" }),
+        ]),
+      ]),
+      _vm._v(" "),
       _c("div", { staticClass: "col-md-8 col-xl-6 chat" }, [
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-header msg_head" }, [
             _c("div", { staticClass: "d-flex bd-highlight" }, [
-              _vm._m(0),
+              _vm._m(2),
               _vm._v(" "),
               _c("div", { staticClass: "user_info" }, [
                 _c("span", [_vm._v(_vm._s(this.name))]),
@@ -44145,12 +44157,12 @@ var render = function () {
                 _c("p", [_vm._v("1767 Messages")]),
               ]),
               _vm._v(" "),
-              _vm._m(1),
+              _vm._m(3),
             ]),
             _vm._v(" "),
-            _vm._m(2),
+            _vm._m(4),
             _vm._v(" "),
-            _vm._m(3),
+            _vm._m(5),
           ]),
           _vm._v(" "),
           _c(
@@ -44182,7 +44194,7 @@ var render = function () {
           _vm._v(" "),
           _c("div", { staticClass: "card-footer" }, [
             _c("div", { staticClass: "input-group" }, [
-              _vm._m(4),
+              _vm._m(6),
               _vm._v(" "),
               _c("textarea", {
                 directives: [
@@ -44224,6 +44236,40 @@ var render = function () {
   ])
 }
 var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("div", { staticClass: "input-group" }, [
+        _c("input", {
+          staticClass: "form-control search",
+          attrs: { type: "text", placeholder: "Search...", name: "" },
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "input-group-prepend" }, [
+          _c("span", { staticClass: "input-group-text search_btn" }, [
+            _c("i", { staticClass: "fas fa-search" }),
+          ]),
+        ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "img_cont" }, [
+      _c("img", {
+        staticClass: "rounded-circle user_img",
+        attrs: {
+          src: "https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg",
+        },
+      }),
+      _vm._v(" "),
+      _c("span", { staticClass: "online_icon" }),
+    ])
+  },
   function () {
     var _vm = this
     var _h = _vm.$createElement

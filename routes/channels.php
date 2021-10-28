@@ -14,5 +14,8 @@ use Illuminate\Support\Facades\Broadcast;
 */
 
 Broadcast::channel('room.{room}', function ($user, \App\Models\Room $room) {
-    return $room->participants->contains($user);
+    $allow = $room->participants->contains($user);
+    if ($allow) {
+        return ['user' => $user->toArray()];
+    }
 });
